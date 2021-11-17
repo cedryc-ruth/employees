@@ -30,9 +30,18 @@
                     <td><?= h($employee->gender) ?></td>
                     <td><?= h($employee->hire_date) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $employee->emp_no]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $employee->emp_no]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $employee->emp_no], ['confirm' => __('Are you sure you want to delete # {0}?', $employee->emp_no)]) ?>
+                        <?= $this->Html->link(__('<i class="fas fa-eye"></i>'),
+                            ['action' => 'view', $employee->emp_no],
+                            ['escape' => false]) ?>
+                        <?= $this->Html->link(__('<i class="fas fa-edit"></i>'), 
+                            ['action' => 'edit', $employee->emp_no],
+                            ['escape' => false]) ?>
+                        <?= $this->Form->postLink(__('<i class="fas fa-trash-alt"></i>'), 
+                            ['action' => 'delete', $employee->emp_no], 
+                            [
+                                'confirm' => __('Are you sure you want to delete # {0}?', $employee->emp_no),
+                                'escape' => false
+                            ]) ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>
