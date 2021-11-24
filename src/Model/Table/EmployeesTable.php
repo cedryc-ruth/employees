@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use Cake\Datasource\EntityInterface;
+use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -40,8 +42,25 @@ class EmployeesTable extends Table
         $this->setTable('employees');
         $this->setDisplayField('emp_no');
         $this->setPrimaryKey('emp_no');
+        
+        //Associations
+        $this->hasMany('Salaries',[
+            'foreignKey' => 'emp_no',
+        ]);
+    }
+    
+    public function findLastId(Query $query, array $options) {
+        $query->select(['lastId' => $query->func()->max('emp_no')]);
+        
+        return $query;
     }
 
+    public function beforeSave(Event $event, EntityInterface $entity, $options) {
+        $lastId = $this->find('lastId')->first()->lastId;
+        
+        $entity->emp_no = ++$lastId;
+    }
+    
     /**
      * Default validation rules.
      *

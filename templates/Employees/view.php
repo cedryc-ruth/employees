@@ -16,7 +16,12 @@
     </aside>
     <div class="column-responsive column-80">
         <div class="employees view content">
-            <h3><?= h($employee->emp_no) ?></h3>
+            <h3><?= h($employee->emp_no) ?><?php dump($employee->age) ?></h3>
+            <div id="salary"><?= $this->Number->format($employee->actualSalary->salary,[
+                'locale' => 'fr_FR',
+                'after' => ' €',
+                'places' => 2,
+            ]) ?></div>
             <table>
                 <tr>
                     <th><?= __('First Name') ?></th>
@@ -41,6 +46,15 @@
                 <tr>
                     <th><?= __('Hire Date') ?></th>
                     <td><?= h($employee->hire_date) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Salaries') ?></th>
+                    <td>
+                    	<ul><?php foreach($employee->salaries as $salary) { ?>
+                        	<li><?= "{$salary->salary} ({$salary->from_date} - {$salary->to_date})" ?></li>
+                    	<?php } ?>
+                    	</ul>
+                    </td>
                 </tr>
             </table>
         </div>

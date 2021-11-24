@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\I18n\FrozenDate;
+
 /**
  * Employees Controller
  *
@@ -33,9 +35,24 @@ class EmployeesController extends AppController
     public function view($id = null)
     {
         $employee = $this->Employees->get($id, [
-            'contain' => [],
+            'contain' => ['Salaries'],
         ]);
 
+        /*  Remonter dans le modèle pour alléger le contrôleur
+        $salaries = $employee->salaries;
+        
+        $dateInfinie = new FrozenDate('9999-01-01');
+        
+        foreach ($salaries as $salary) {
+            if($salary->to_date->equals($dateInfinie)) {
+                $employee->actualSalary = $salary;                
+                break;
+            }
+        }
+        */
+        
+        //dd($employee);
+        
         $this->set(compact('employee'));
     }
 
@@ -47,8 +64,28 @@ class EmployeesController extends AppController
     public function add()
     {
         $employee = $this->Employees->newEmptyEntity();
+        
+        $total = $this->Employees->find()->count();
+        
+        dd($total);
+        
         if ($this->request->is('post')) {
+            //Validation des données
             $employee = $this->Employees->patchEntity($employee, $this->request->getData());
+            
+            //Récupérer le dernier id 
+            /* Remonter dans le modèle EmployeesTable
+            $query = $this->Employees->find();
+            $employeeId = $query->select(['lastId' => $query->func()->max('emp_no')])
+                ->first()->lastId;
+            */
+            /*
+            $lastId = $this->Employees->find('lastId')->first()->lastId;
+            
+            //incrémenter l'id
+            $employee->emp_no = ++$lastId;
+            */
+            
             if ($this->Employees->save($employee)) {
                 $this->Flash->success(__('The employee has been saved.'));
 
@@ -56,6 +93,7 @@ class EmployeesController extends AppController
             }
             $this->Flash->error(__('The employee could not be saved. Please, try again.'));
         }
+        
         $this->set(compact('employee'));
     }
 

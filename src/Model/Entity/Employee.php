@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\I18n\FrozenDate;
 
 /**
  * Employee Entity
@@ -33,4 +34,26 @@ class Employee extends Entity
         'gender' => true,
         'hire_date' => true,
     ];
+    
+    protected function _getAge() {
+        return $this->birth_date->diffInYears(new FrozenDate());
+    }
+    
+    protected function _getActualSalary() {
+        $actualSalary = null;
+        
+        $salaries = $this->salaries;
+        
+        $dateInfinie = new FrozenDate('9999-01-01');
+        
+        foreach ($salaries as $salary) {
+            if($salary->to_date->equals($dateInfinie)) {
+                $actualSalary = $salary;
+                break;
+            }
+        }
+        
+        return $actualSalary;
+    }
+    
 }
