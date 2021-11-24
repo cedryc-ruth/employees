@@ -21,8 +21,10 @@ class EmployeesController extends AppController
     public function index()
     {
         $employees = $this->paginate($this->Employees);
-
-        $this->set(compact('employees'));
+        
+        $total = $this->Employees->find()->count();
+        
+        $this->set(compact('employees','total'));
     }
 
     /**
@@ -63,11 +65,7 @@ class EmployeesController extends AppController
      */
     public function add()
     {
-        $employee = $this->Employees->newEmptyEntity();
-        
-        $total = $this->Employees->find()->count();
-        
-        dd($total);
+        $employee = $this->Employees->newEmptyEntity();     
         
         if ($this->request->is('post')) {
             //Validation des données

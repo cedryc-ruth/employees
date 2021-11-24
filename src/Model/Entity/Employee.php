@@ -35,6 +35,7 @@ class Employee extends Entity
         'hire_date' => true,
     ];
     
+    //Champs virtuels
     protected function _getAge() {
         return $this->birth_date->diffInYears(new FrozenDate());
     }
