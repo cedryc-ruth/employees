@@ -17,6 +17,17 @@
     <div class="column-responsive column-80">
         <div class="departments view content">
             <h3><?= h($department->dept_no) ?></h3>
+
+            <div class="card" style="width: 18rem;">
+                <?= $this->Html->image("department/".$department->picture,[
+                        "alt"=> h($department->dept_name),
+                        "width"=>250,
+                        "class"=>"card-img-top"
+                ]) ?>
+                <div class="card-body">
+                    <h5 class="card-title"><?= h($department->dept_name) ?></h5>
+                </div>
+            </div>
             <table>
                 <tr>
                     <th><?= __('Dept No') ?></th>

@@ -13,6 +13,7 @@
                 <tr>
                     <th><?= $this->Paginator->sort('dept_no') ?></th>
                     <th><?= $this->Paginator->sort('dept_name') ?></th>
+                    <th><?= $this->Paginator->sort('# employees') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
             </thead>
@@ -21,6 +22,7 @@
                 <tr>
                     <td><?= h($department->dept_no) ?></td>
                     <td><?= h($department->dept_name) ?></td>
+                    <td><?= h($department->nbEmployees) ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $department->dept_no]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $department->dept_no]) ?>

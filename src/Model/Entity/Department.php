@@ -25,4 +25,8 @@ class Department extends Entity
     protected $_accessible = [
         'dept_name' => true,
     ];
+
+    public function _getNbEmployees() {
+        return 10;//count($this->employees);
+    }
 }

@@ -55,6 +55,17 @@ class EmployeesTable extends Table
         return $query;
     }
 
+    public function findEmployees(Query $query, array $options) {
+        
+        $query->innerJoinWith('Departments', function($q) {
+                return $q->where([
+                    'DeptEmp.to_date'=>'9999-01-01',
+                ]);
+        });
+
+        return $query;
+    }
+
     public function beforeSave(Event $event, EntityInterface $entity, $options) {
         $lastId = $this->find('lastId')->first()->lastId;
         

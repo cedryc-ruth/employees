@@ -18,8 +18,14 @@ class DepartmentsController extends AppController
      */
     public function index()
     {
-        $departments = $this->paginate($this->Departments);
+        //dd($this->Departments->find('employees')->contain('Employees')->first()->employees);
 
+        $this->paginate = [
+        //    'contain' => ['Employees'],
+        ];
+
+        $departments = $this->paginate($this->Departments);
+        //dd($departments);
         $this->set(compact('departments'));
     }
 
@@ -35,7 +41,7 @@ class DepartmentsController extends AppController
         $department = $this->Departments->get($id, [
             'contain' => [],
         ]);
-
+        
         $this->set(compact('department'));
     }
 
