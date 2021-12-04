@@ -34,6 +34,8 @@ class Employee extends Entity
         'last_name' => true,
         'gender' => true,
         'hire_date' => true,
+        'password' => true,
+        'email' => true,
     ];
     
     //Champs virtuels

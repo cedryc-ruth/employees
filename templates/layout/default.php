@@ -15,6 +15,8 @@
  */
 
 $cakeDescription = 'CakePHP: the rapid development php framework';
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -47,6 +49,21 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             <a href="<?= $this->Url->build('/') ?>"><span>Cake</span>PHP</a>
         </div>
         <div class="top-nav-links">
+        <?php if($user) : ?>
+            <?= $this->Html->link(__('Se déconnecter'), [
+                'controller'=>'Employees',
+                'action'=>'logout',
+            ],[
+                'class'=>'btn btn-danger'
+            ] ) ?>
+        <?php else : ?>
+            <?= $this->Html->link(__('Se connecter'), [
+                'controller'=>'Employees',
+                'action'=>'login',
+            ],[
+                'class'=>'btn btn-secundary'
+            ] ) ?>
+        <?php endif; ?>
             <a target="_blank" rel="noopener" href="https://book.cakephp.org/4/">Documentation</a>
             <a target="_blank" rel="noopener" href="https://api.cakephp.org/">API</a>
         </div>

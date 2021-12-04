@@ -152,7 +152,8 @@ class EmployeesController extends AppController
         
         // Si l'utilisateur est connecté, le renvoyer ailleurs
         if ($result->isValid()) {
-            $target = $this->Authentication->getLoginRedirect() ?? '/home';
+            $target = $this->Authentication->getLoginRedirect() ?? '/pages/home';
+
             return $this->redirect($target);
         }
 
@@ -160,4 +161,12 @@ class EmployeesController extends AppController
             $this->Flash->error('Identifiant ou mot de passe invalide');
         }
     }
+
+    public function logout()
+    {
+        $this->Authentication->logout();
+        
+        return $this->redirect(['controller' => 'Employees', 'action' => 'login']);
+    }
 }
+
