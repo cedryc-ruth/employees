@@ -13,6 +13,13 @@ use Cake\I18n\FrozenDate;
  */
 class EmployeesController extends AppController
 {
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+
+        $this->Authentication->allowUnauthenticated(['login']);
+    }
+
     /**
      * Index method
      *
@@ -137,5 +144,20 @@ class EmployeesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function login()
+    {
+        $result = $this->Authentication->getResult();
+        
+        // Si l'utilisateur est connecté, le renvoyer ailleurs
+        if ($result->isValid()) {
+            $target = $this->Authentication->getLoginRedirect() ?? '/home';
+            return $this->redirect($target);
+        }
+
+        if ($this->request->is('post') && !$result->isValid()) {
+            $this->Flash->error('Identifiant ou mot de passe invalide');
+        }
     }
 }

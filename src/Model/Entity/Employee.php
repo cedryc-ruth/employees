@@ -5,6 +5,7 @@ namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 use Cake\I18n\FrozenDate;
+use Authentication\PasswordHasher\DefaultPasswordHasher;
 
 /**
  * Employee Entity
@@ -55,6 +56,13 @@ class Employee extends Entity
         }
         
         return $actualSalary;
+    }
+
+    // Hacher automatiquement les mots de passe quand ils sont modifiés.
+    protected function _setPassword(string $password)
+    {
+        $hasher = new DefaultPasswordHasher();
+        return $hasher->hash($password);
     }
     
 }
