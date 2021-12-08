@@ -17,7 +17,7 @@ class EmployeesController extends AppController
     {
         parent::beforeFilter($event);
 
-        $this->Authentication->allowUnauthenticated(['login']);
+        $this->Authentication->allowUnauthenticated(['login','index','view']);
     }
 
     /**

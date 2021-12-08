@@ -37,6 +37,21 @@
                     <th><?= __('Dept Name') ?></th>
                     <td><?= h($department->dept_name) ?></td>
                 </tr>
+                <tr>
+                    <th><?= __('Employee\'s list') ?></th>
+                    <td><p><?= ($nbEmployees ?? '0'). __(' employees') ?></p>
+                    <?php
+                    $liste = '';
+
+                    foreach($department->employees as $employee): 
+                        $liste .= "$employee->first_name $employee->last_name, ";
+                    endforeach;
+
+                    $liste = substr($liste,0,-1);
+                    $liste .= "...";    ?>
+                        <p><?= $liste ?></p>
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
