@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\I18n\FrozenDate;
+use Cake\View\CellTrait;
 
 /**
  * Employees Controller
@@ -13,6 +14,8 @@ use Cake\I18n\FrozenDate;
  */
 class EmployeesController extends AppController
 {
+    use CellTrait;
+
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
@@ -30,8 +33,10 @@ class EmployeesController extends AppController
         $employees = $this->paginate($this->Employees);
         
         $total = $this->Employees->find()->count();
+
+        $genderCell = $this->cell('Gender');
         
-        $this->set(compact('employees','total'));
+        $this->set(compact('employees','total','genderCell'));
     }
 
     /**
