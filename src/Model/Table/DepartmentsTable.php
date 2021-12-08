@@ -46,8 +46,21 @@ class DepartmentsTable extends Table
             'joinTable'=>'dept_emp',
             'foreignKey'=>'dept_no',
             'targetForeignKey'=>'emp_no',
-            //'finder'=>['employees']
         ]);
+    }
+
+    public function findActiveEmployees(Query $query, array $options) {
+        //dump($options);
+
+        $query->contain('Employees', function($q) {
+                return $q->where([
+                    'DeptEmp.to_date' => '9999-01-01',
+                ])->order([
+                    'hire_date' => 'DESC',
+                ])->limit(10);
+        });
+
+        return $query;
     }
 
     /**

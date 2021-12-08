@@ -11,6 +11,29 @@ namespace App\Controller;
  */
 class DepartmentsController extends AppController
 {
+    public $paginate = [
+        'limit' => 1,
+        'Employees' => [
+            'limit' => 5,
+        ],
+        'contain' => ['Employees'],
+    ];
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->loadComponent('Paginator');
+        ini_set('memory_limit', '-1');
+
+    }
+
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+
+        $this->Authentication->allowUnauthenticated(['index','view']);
+    }
+
     /**
      * Index method
      *
@@ -18,8 +41,6 @@ class DepartmentsController extends AppController
      */
     public function index()
     {
-        //dd($this->Departments->find('employees')->contain('Employees')->first()->employees);
-
         $this->paginate = [
         //    'contain' => ['Employees'],
         ];
@@ -38,11 +59,16 @@ class DepartmentsController extends AppController
      */
     public function view($id = null)
     {
-        $department = $this->Departments->get($id, [
-            'contain' => [],
-        ]);
+        //$query = $this->Departments->find('ActiveEmployees', ['limit'=>10])   //$options doesn't pass
+        $query = $this->Departments->find('ActiveEmployees')
+            ->where(['dept_no' => $id]);
         
-        $this->set(compact('department'));
+        //dd($query->first()->employees[0]);
+
+        $department = $query->first();
+        $nbEmployees = 14000;   //TODO
+
+        $this->set(compact('department','nbEmployees'));
     }
 
     /**
