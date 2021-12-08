@@ -39,13 +39,14 @@
                 </tr>
                 <tr>
                     <th><?= __('Employee\'s list') ?></th>
-                    <td><p><?= ($nbEmployees ?? '0'). __(' employees') ?></p>
+                    <td><p><?= ($department->nbEmployees ?? '0'). __(' employees') ?></p>
                     <?php
                     $liste = '';
 
-                    foreach($department->employees as $employee): 
+                    for($i=0;$i<10;$i++): 
+                        $employee = $department->employees[$i];
                         $liste .= "$employee->first_name $employee->last_name, ";
-                    endforeach;
+                    endfor;
 
                     $liste = substr($liste,0,-1);
                     $liste .= "...";    ?>

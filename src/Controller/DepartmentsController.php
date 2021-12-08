@@ -66,9 +66,8 @@ class DepartmentsController extends AppController
         //dd($query->first()->employees[0]);
 
         $department = $query->first();
-        $nbEmployees = 14000;   //TODO
 
-        $this->set(compact('department','nbEmployees'));
+        $this->set(compact('department'));
     }
 
     /**
