@@ -56,6 +56,12 @@ class EmployeesTable extends Table
         ]);
     }
     
+    public function findActive(Query $query, array $options) { 
+        $query->contain('Departments');
+        
+        return $query;
+    }
+
     public function findLastId(Query $query, array $options) {
         $query->select(['lastId' => $query->func()->max('emp_no')]);
         

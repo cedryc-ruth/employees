@@ -60,6 +60,21 @@ class Employee extends Entity
         return $actualSalary;
     }
 
+    protected function _getActualDepartment() {
+        $actualDepartment = null;   //dd($this->departments);
+        $dateInfinie = new FrozenDate('9999-01-01');      
+
+        foreach($this->departments as $department) {
+            if($department->_joinData->to_date->equals($dateInfinie)) {
+                $actualDepartment = $department;
+            }
+        }
+
+        return $actualDepartment;
+    }
+
+    //
+
     // Hacher automatiquement les mots de passe quand ils sont modifiés.
     protected function _setPassword(string $password)
     {

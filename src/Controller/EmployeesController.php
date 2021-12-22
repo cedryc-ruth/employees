@@ -30,6 +30,8 @@ class EmployeesController extends AppController
      */
     public function index()
     {
+        $this->Authorization->skipAuthorization();
+
         $employees = $this->paginate($this->Employees);
         
         $total = $this->Employees->find()->count();
@@ -48,6 +50,8 @@ class EmployeesController extends AppController
      */
     public function view($id = null)
     {
+        $this->Authorization->skipAuthorization();
+
         $employee = $this->Employees->get($id, [
             'contain' => ['Salaries'],
         ]);
@@ -77,6 +81,8 @@ class EmployeesController extends AppController
      */
     public function add()
     {
+        $this->Authorization->skipAuthorization();
+
         $employee = $this->Employees->newEmptyEntity();     
         
         if ($this->request->is('post')) {
@@ -117,8 +123,13 @@ class EmployeesController extends AppController
     public function edit($id = null)
     {
         $employee = $this->Employees->get($id, [
-            'contain' => [],
-        ]);
+            'contain' => ['Departments'],
+        ]);   
+        
+        //dd($employee->actualDepartment);
+
+        $this->Authorization->authorize($employee, 'edit');
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $employee = $this->Employees->patchEntity($employee, $this->request->getData());
             if ($this->Employees->save($employee)) {
@@ -153,6 +164,7 @@ class EmployeesController extends AppController
 
     public function login()
     {
+        $this->Authorization->skipAuthorization();
         $result = $this->Authentication->getResult();
         
         // Si l'utilisateur est connecté, le renvoyer ailleurs
@@ -169,6 +181,7 @@ class EmployeesController extends AppController
 
     public function logout()
     {
+        $this->Authorization->skipAuthorization();
         $this->Authentication->logout();
         
         return $this->redirect(['controller' => 'Employees', 'action' => 'login']);
