@@ -21,7 +21,7 @@
             <div class="card" style="width: 18rem;">
                 <?= $this->Html->image("department/".$department->picture,[
                         "alt"=> h($department->dept_name),
-                        "width"=>250,
+                        "width"=>300,
                         "class"=>"card-img-top"
                 ]) ?>
                 <div class="card-body">
