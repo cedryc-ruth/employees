@@ -70,6 +70,43 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </nav>
     <main class="main">
         <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Departments</a>
+                        </li>
+                        <li class="nav-item">
+                            <?= $this->Html->link(__('Employees'), [
+                                'controller'=>'Employees',
+                                'action'=>'index',
+                            ],[
+                                'class'=>'nav-link'
+                            ] ) ?>
+                        </li>
+                    <?php if($user!=null) { ?>
+                        <li class="nav-item">
+                            <?= $this->Html->link(__('Manage cars'), [
+                                    'controller'=>'Cars',
+                                    'action'=>'switchCars',
+                                ],[
+                                    'class'=>'nav-link'
+                                ] ) ?>
+                            <a class="nav-link" href="#"></a>
+                        </li>
+                    <?php } ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Front-office</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
             <?= $this->Flash->render() ?>
             <?= $this->fetch('content') ?>
         </div>

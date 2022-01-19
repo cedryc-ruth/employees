@@ -69,9 +69,11 @@ class EmployeesTable extends Table
     }
 
     public function beforeSave(Event $event, EntityInterface $entity, $options) {
-        $lastId = $this->find('lastId')->first()->lastId;
-        
-        $entity->emp_no = ++$lastId;
+        //Générer l'id s'il s'agit d'un nouvel enregistrement
+        if($entity->isNew()) {
+            $lastId = $this->find('lastId')->first()->lastId;
+            $entity->emp_no = ++$lastId;
+        }
     }
     
     /**

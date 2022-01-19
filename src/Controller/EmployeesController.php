@@ -89,19 +89,6 @@ class EmployeesController extends AppController
             //Validation des données
             $employee = $this->Employees->patchEntity($employee, $this->request->getData());
             
-            //Récupérer le dernier id 
-            /* Remonter dans le modèle EmployeesTable
-            $query = $this->Employees->find();
-            $employeeId = $query->select(['lastId' => $query->func()->max('emp_no')])
-                ->first()->lastId;
-            */
-            /*
-            $lastId = $this->Employees->find('lastId')->first()->lastId;
-            
-            //incrémenter l'id
-            $employee->emp_no = ++$lastId;
-            */
-            
             if ($this->Employees->save($employee)) {
                 $this->Flash->success(__('The employee has been saved.'));
 
