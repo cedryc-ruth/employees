@@ -70,6 +70,45 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </nav>
     <main class="main">
         <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                    <li class="nav-item">
+                    <?= $this->Html->link(__('Départements'), [
+                            'controller'=>'Employees',
+                            'action'=>'logout',
+                        ] ) ?>
+                    </li>
+                    <li class="nav-item">
+                    <?= $this->Html->link(__('Employés'), [
+                            'controller'=>'Employees',
+                            'action'=>'index'
+                        ],[
+                            'style'=>'margin:0 5px 0 5px'
+                        ] ) ?>
+                    </li>
+                <?php if(!empty($user)) { ?>
+                    <li class="nav-item">
+                    <?= $this->Html->link(__('Gérer les échanges'), [
+                            'controller'=>'Cars',
+                            'action'=>'index',
+                        ],[
+                            'style'=>'margin:0 5px 0 5px'
+                        ] ) ?>
+                    </li>
+                <?php } ?>
+                    <li class="nav-item">
+                    <?= $this->Html->link(__('Front-office'), [
+                            'controller'=>'Employees',
+                            'action'=>'index',
+                        ] ) ?>
+                    </li>
+                    </ul>
+                </div>
+                </nav>
             <?= $this->Flash->render() ?>
             <?= $this->fetch('content') ?>
         </div>
