@@ -23,6 +23,27 @@ class EmployeesController extends AppController
         $this->Authentication->allowUnauthenticated(['login','index','view']);
     }
 
+    public function test()
+    {
+        $this->Authorization->skipAuthorization();
+
+        //dd($this->Employees->DeptEmp->find('all'));
+        //dd($this->getTableLocator()->get('DeptEmp'));
+
+        /*dd($this->Employees->get('10002',[
+            'contain' => 'Desks'
+        ]));*/
+
+        /*dd($this->getTableLocator()->get('Desks')->get(1,[
+            'contain' => 'Employees',
+        ]));*/
+
+        dd($this->Employees->Desks->find('all',[
+            'contain' => 'Employees',
+            'order' => ['nom'=>'DESC']
+        ])->toArray());
+    }
+
     /**
      * Index method
      *
@@ -108,17 +129,25 @@ class EmployeesController extends AppController
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null)
-    {
+    {      
+        dd($this->Employees->Roles->get(3,['contain'=>'Employees']));
+
         $employee = $this->Employees->get($id, [
-            'contain' => ['Departments'],
+            'contain' => ['Departments','Roles'],
         ]);   
         
+        dd($employee->roles);
         //dd($employee->actualDepartment);
 
-        $this->Authorization->authorize($employee, 'edit');
+        if(true) {  //TODO Si admin
+            $this->Authorization->skipAuthorization();
+        } else {
+            $this->Authorization->authorize($employee, 'edit');
+        }
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $employee = $this->Employees->patchEntity($employee, $this->request->getData());
+
             if ($this->Employees->save($employee)) {
                 $this->Flash->success(__('The employee has been saved.'));
 
@@ -126,7 +155,14 @@ class EmployeesController extends AppController
             }
             $this->Flash->error(__('The employee could not be saved. Please, try again.'));
         }
-        $this->set(compact('employee'));
+
+        $data = $this->Employees->Desks->find('all')->toArray();
+
+        foreach($data as $d) {
+            $desks[$d->id] = "$d->numero - $d->nom";
+        }
+        
+        $this->set(compact('employee','desks'));
     }
 
     /**

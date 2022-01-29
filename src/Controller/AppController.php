@@ -56,7 +56,7 @@ class AppController extends Controller
 
         //Récupérer l'utilisateur connecté
         $user = $this->Authentication->getIdentity();
-
+        //dd($user->email);
         //L'envoyer dans la vue pour tous les contrôleurs
         $this->set(compact('user'));
     }

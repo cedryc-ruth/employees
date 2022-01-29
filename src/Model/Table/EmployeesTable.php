@@ -54,6 +54,18 @@ class EmployeesTable extends Table
             'targetForeignKey'=>'dept_no',
             'finder'=>['activeEmployees']
         ]);
+
+        $this->hasMany('DeptEmp',[
+            'foreignKey'=>'emp_no',
+        ]);
+
+        $this->belongsTo('Desks');
+
+        $this->belongsToMany('Roles',[
+            'joinTable'=>'emp_role',
+            'foreignKey'=>'emp_no',
+            'targetForeignKey'=>'role_no',
+        ]);
     }
     
     public function findActive(Query $query, array $options) { 

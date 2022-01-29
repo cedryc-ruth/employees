@@ -22,6 +22,7 @@
             <fieldset>
                 <legend><?= __('Edit Employee') ?></legend>
                 <?php
+                    echo $this->Form->select('desk_id',$desks,['empty'=>true]);
                     echo $this->Form->control('birth_date');
                     echo $this->Form->control('first_name');
                     echo $this->Form->control('last_name');

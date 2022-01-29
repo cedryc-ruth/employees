@@ -36,6 +36,7 @@ class Employee extends Entity
         'hire_date' => true,
         'password' => true,
         'email' => true,
+        'desk_id' => true,
     ];
     
     //Champs virtuels
